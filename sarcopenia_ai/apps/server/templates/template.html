@@ -1,0 +1,165 @@
+<!doctype html>
+
+{% extends "material/base.html" %}
+{% import "material/utils.html" as util %}
+
+{% block style %}
+{{ super() }}
+
+{% endblock %}
+
+{% block title %}Sarcopenia AI{% endblock %}
+
+{% block content %}
+
+<nav>
+    <div class="nav-wrapper blue">
+        <a href="/" class="brand-logo center">Sarcopenia AI</a>
+    </div>
+</nav>
+<div class="container">
+    <br>
+
+    <form id="uploadform" method=post enctype=multipart/form-data>
+
+        <div class="file-field">
+            <div class="btn btn-primary btn-sm float-left">
+                <span>Choose file</span>
+                <input id="file-upload" type=file name=file>
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="Upload a nifti file">
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit" value=Upload onclick="loading();">Upload
+            <i class="material-icons right">cloud_upload</i>
+        </button>
+    </form>
+    <div id="loading" style="display: none;">
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+    </div>
+    <br>
+    <div id="content">
+
+        <div class="row">
+            <div class="col s6">
+
+                {% if success %}
+                <div id="app" class="card">
+                    <div class="card-content">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td>File name</td>
+                                <td>{{ image_name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Muscle attenuation</td>
+                                <td>{{ muscle_attenuation }}</td>
+                            </tr>
+                            <tr>
+                                <td>Muscle area</td>
+                                <td><p ref="area">{{ muscle_area }}</p>cm^2</td>
+                            </tr>
+                            <tr>
+                                <td>Slice position</td>
+                                <td>{{ slice_z }}</td>
+                            </tr>
+                            <tr>
+                                <td>Slice detection confidence</td>
+                                <td>{{ slice_prob }}</td>
+                            </tr>
+                            <tr>
+                                <td>Patient height</td>
+                                <td><input v-model.number="height"> m</td>
+                            </tr>
+                            <tr>
+                                <td>Sarcopenia score</td>
+                                <td>[[ (area_v/ (height*height)).toFixed(2) ]] cm2/m2</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% elif image_name and not success %}
+                <div class="card">
+                    <div class="card-content">
+                        <p>Slice not detected.</p>
+                    </div>
+                </div>
+                {% endif %}
+
+
+            </div>
+            {% if success %}
+
+
+            <div class="col s6">
+                {% if seg_image %}
+                <img class="responsive-img" src="{{ url_for('uploaded_file', filename=seg_image) }}">
+                {% else %}
+                <p></p>
+                {% endif %}
+            </div>
+
+
+            {% endif %}
+            <div class="col s6 offset-s6">
+                {% if frontal_image %}
+                <img class="responsive-img" src="{{ url_for('uploaded_file', filename=frontal_image) }}">
+                {% else %}
+                <p></p>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+
+    <div>
+
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+<script src="https://unpkg.com/vue"></script>
+
+<script type="text/javascript">// <![CDATA[
+        function loading(){
+            $("#loading").show();
+
+
+        }
+// ]]>
+
+var app = new Vue({
+  el: '#app',
+  delimiters: ["[[", "]]"],
+  data: {
+  	height: 1.70,
+    area_v: -1
+  },
+  mounted:  function () {
+
+      this.area_v = this.$refs.area.innerText
+      console.log(this.$refs.area.innerText)
+
+  }
+})
+
+
+</script>
+{% endblock %}
