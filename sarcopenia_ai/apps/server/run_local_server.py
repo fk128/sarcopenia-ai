@@ -100,7 +100,7 @@ def process_file(image_path, filename, prob_threshold=0.1):
     if slice_detected:
         results["prediction"]["slice_z"] = slice_z
 
-        slice_image = image3d[slice_z, :, :]
+        slice_image = image3d[-slice_z, :, :]
 
         with graph.as_default():
             set_session(sess)
