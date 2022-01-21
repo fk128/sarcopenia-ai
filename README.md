@@ -32,7 +32,7 @@ docker build -t sarcopeniaai -f ./Dockerfile .
 
 #### Slice detection trainer
 
-Download the training data from [here](https://imperialcollegelondon.box.com/s/mw7ysamajjcp1ot0721e6nl36xku0acv) 
+Download the training data from [here](https://imperialcollegelondon.box.com/s/0vt07mxy0re4zwao0sk76ywdt2s1pclm) 
 to your data folder. 
 
 ```
