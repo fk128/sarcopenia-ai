@@ -30,6 +30,8 @@ pip install -e .
 docker build -t sarcopeniaai -f ./Dockerfile .
 ```
 
+or `make build`
+
 #### Slice detection trainer
 
 Download the training data from [here](https://imperialcollegelondon.box.com/s/0vt07mxy0re4zwao0sk76ywdt2s1pclm) 
@@ -54,6 +56,8 @@ docker run --rm -it -v <your_data_folder>:/data -v $(pwd)/configs:/configs sarco
 #### Run as API server
 
 `docker run --rm -it -p 5000:5000 sarcopeniaai python -m sarcopenia_ai.apps.server.run_local_server`
+
+or `make server`
 
 Then head to http://localhost:5000 for web UI
 

@@ -1,10 +1,10 @@
 tensorflow-gpu==1.14
 keras==2.2.4
-sklearn
-flask
-flask_materialize
-imageio
+scikit-learn==0.23.0
+flask==1.1.3
+flask_materialize==0.2.4
+imageio==2.5.0
 opencv-python==4.1.2.30
 imgaug==0.4.0
-SimpleITK
-pydicom
+SimpleITK==1.2.4
+pydicom==2.0.0
