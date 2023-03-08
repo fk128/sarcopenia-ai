@@ -9,15 +9,18 @@ with open('README.md') as readme_file:
     readme = readme_file.read()
 
 
-with open('requirements.txt') as file:
-    requirements = file.read().splitlines()
+def parse_requirements(path):
+    with open(path) as requirements_file:
+        requirements_base = requirements_file.read().splitlines()
 
-dependency_links = []
-for i, req in enumerate(requirements):
-    if 'git' in req:
-        dependency_links.append(req)
-        requirements[i] = req.split('/')[-1].split('.')[0]
+    requirements = [
+        f"{r.split('#egg=')[-1]}@{r}" for r in requirements_base if r.startswith("git+")
+    ]
+    requirements += [r for r in requirements_base if not r.startswith("git+")]
+    return requirements
 
+
+requirements = parse_requirements("requirements.txt")
 
 setup_requirements = [ ]
 
@@ -54,7 +57,6 @@ setup(
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    dependency_links=dependency_links,
     url='',
     version='0.1.0',
     zip_safe=False,
