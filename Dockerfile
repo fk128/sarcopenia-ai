@@ -10,7 +10,6 @@ RUN apt-get install -y git
 
 ADD ./requirements.txt /
 RUN pip install -r /requirements.txt
-RUN git clone https://github.com/fk128/midatasets.git && pip install -e midatasets
 
 ADD . /sarcopenia_ai
 
