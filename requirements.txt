@@ -8,4 +8,5 @@ opencv-python==4.1.2.30
 imgaug==0.4.0
 SimpleITK==1.2.4
 pydicom==2.0.0
+numpy==1.15.0
 git+https://github.com/fk128/midatasets@v0.20.0#egg=midatasets[all]
